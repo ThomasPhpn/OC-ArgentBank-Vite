@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser as faCircleUserSolid } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket as faRightFromBracketSolid } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../assets/img/argentBankLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,40 +11,44 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleSignOut = () => {
     dispatch(logout());
     navigate("/");
   };
 
   return (
-    <>
+    <nav className="flex justify-between items-center px-[20px] py-[5px] shadow-md">
+      <Link to="/">
+        <img src={Logo} alt="ArgentBank" className="w-[200px]" />
+      </Link>
+
       {token ? (
-        <nav className="flex flex-row justify-between items-center px-[20px] py-[5px]">
-          <Link to="/">
-            <img src={Logo} alt="ArgentBank" className="w-[200px]" />
+        <div className="flex items-center gap-5 space-x-4">
+          <Link
+            to="/user"
+            className="flex items-center gap-2 text-gray-700 font-bold"
+          >
+            <FontAwesomeIcon icon={faCircleUserSolid} size="1x" />{" "}
+            {user?.userName || user?.firstName}
           </Link>
-          <div className="flex flex-row items-center gap-3">
-            <FontAwesomeIcon icon={faCircleUserSolid} size="1x" />
-            <p className="font-bold">{user.userName}</p>
-            <button onClick={handleLogout} className="font-bold">
-              Logout
-            </button>
-          </div>
-        </nav>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-2 text-gray-700 font-bold"
+          >
+            <FontAwesomeIcon icon={faRightFromBracketSolid} size="1x" /> Sign
+            Out
+          </button>
+        </div>
       ) : (
-        <nav className="flex flex-row justify-between items-center px-[20px] py-[5px]">
-          <Link to="/">
-            <img src={Logo} alt="ArgentBank" className="w-[200px]" />
-          </Link>
-          <Link to="/login">
-            <div className="flex flex-row items-center gap-3 hover:underline">
-              <FontAwesomeIcon icon={faCircleUserSolid} size="1x" />
-              <p className="font-bold">Sign in</p>
-            </div>
-          </Link>
-        </nav>
+        <Link
+          to="/login"
+          className="flex items-center gap-2 text-gray-700 font-bold"
+        >
+          <FontAwesomeIcon icon={faCircleUserSolid} size="1x" />
+          Sign In
+        </Link>
       )}
-    </>
+    </nav>
   );
 };
 

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const login = createAsyncThunk(
@@ -36,15 +36,15 @@ export const fetchProfile = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    token: null,
     user: null,
+    token: null,
     error: null,
     loading: false,
   },
   reducers: {
     logout: (state) => {
-      state.token = null;
       state.user = null;
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
