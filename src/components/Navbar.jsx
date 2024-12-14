@@ -28,15 +28,23 @@ const Navbar = () => {
             to="/user"
             className="flex items-center gap-2 text-gray-700 font-bold"
           >
-            <FontAwesomeIcon icon={faCircleUserSolid} size="1x" />{" "}
+            <FontAwesomeIcon
+              icon={faCircleUserSolid}
+              size="1x"
+              className="text-customGreen"
+            />{" "}
             {user?.userName || user?.firstName}
           </Link>
           <button
             onClick={handleSignOut}
             className="flex items-center gap-2 text-gray-700 font-bold"
           >
-            <FontAwesomeIcon icon={faRightFromBracketSolid} size="1x" /> Sign
-            Out
+            <FontAwesomeIcon
+              icon={faRightFromBracketSolid}
+              size="1x"
+              className="text-customGreen"
+            />{" "}
+            Sign Out
           </button>
         </div>
       ) : (
@@ -44,7 +52,11 @@ const Navbar = () => {
           to="/login"
           className="flex items-center gap-2 text-gray-700 font-bold"
         >
-          <FontAwesomeIcon icon={faCircleUserSolid} size="1x" />
+          <FontAwesomeIcon
+            icon={faCircleUserSolid}
+            size="1x"
+            className="text-customGreen"
+          />
           Sign In
         </Link>
       )}

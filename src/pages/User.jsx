@@ -29,11 +29,14 @@ const User = () => {
     }
   };
 
+  const dateString = user.updatedAt;
+  const date = new Date(dateString);
+
   return (
     <div className="flex flex-col min-h-full">
       <main className="flex-grow flex items-start justify-center gap-4 pt-6 bg-cyan-950">
         <div className="flex flex-col md:flex-row items-center gap-4">
-          <div className="bg-white p-8 rounded shadow-md">
+          <div className="bg-white p-8 rounded-2xl shadow-md">
             <div className="text-center">
               <p className="font-bold text-2xl mb-4">
                 Welcome back {user.userName} !
@@ -47,15 +50,18 @@ const User = () => {
                     type="text"
                     value={newUserName}
                     onChange={(e) => setNewUsername(e.target.value)}
-                    className="border rounded px-2"
+                    className="border-[1px] border-cyan-900 rounded px-2"
                   />
                 ) : (
                   user.userName
                 )}
               </p>
+              <i className="text-sm">
+                Last update : {date.toLocaleDateString()}
+              </i>
             </div>
           </div>
-          <div className="bg-white p-8 rounded shadow-md">
+          <div className="bg-white p-8 rounded-2xl shadow-md ">
             <div className="text-center font-bold">
               {isEditing ? (
                 <button
