@@ -24,6 +24,8 @@ const Login = () => {
       //  console.log(password);
       //  console.log(result.payload.token);
       //  console.log(profilResult.payload);
+    } else {
+      console.log(error);
     }
   };
 
@@ -34,7 +36,7 @@ const Login = () => {
           <div className="flex flex-col gap-2 items-center">
             <FontAwesomeIcon icon={faCircleUserSolid} size="2x" />
             <h1 className="text-2xl font-bold text-center">Sign In</h1>
-            {error && <p className="text-red-500">Erreur : {error}</p>}
+            {error && <p className="text-red-500">{error}</p>}
           </div>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
@@ -62,17 +64,6 @@ const Login = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded"
                 required
               />
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-              <label htmlFor="rememberMe" className="text-sm">
-                Remember Me
-              </label>
             </div>
             <button
               type="submit"
