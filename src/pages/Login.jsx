@@ -16,8 +16,10 @@ const Login = () => {
     e.preventDefault();
     const result = await dispatch(login({ email, password }));
     if (result.meta.requestStatus === "fulfilled") {
-      await dispatch(fetchProfile(result.payload.token));
+      const user = await dispatch(fetchProfile(result.payload.token));
       navigate("/user");
+      console.log("result:", result);
+      console.log("user:", user);
       //  console.log(email);
       //  console.log(password);
       //  console.log(result.payload.token);
@@ -28,7 +30,7 @@ const Login = () => {
   return (
     <div className="flex flex-col min-h-full">
       <main className="flex-grow flex items-center justify-center bg-cyan-950">
-        <div className="bg-white p-8 rounded shadow-md shadow-customGreen w-96 flex flex-col gap-5">
+        <div className="bg-white p-8 rounded-2xl shadow-md w-96 flex flex-col gap-5">
           <div className="flex flex-col gap-2 items-center">
             <FontAwesomeIcon icon={faCircleUserSolid} size="2x" />
             <h1 className="text-2xl font-bold text-center">Sign In</h1>
@@ -61,11 +63,22 @@ const Login = () => {
                 required
               />
             </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <label htmlFor="rememberMe" className="text-sm">
+                Remember Me
+              </label>
+            </div>
             <button
               type="submit"
               className="w-full bg-customGreen text-white py-2 px-4 rounded font-bold transition duration-150 ease-in-out transform hover:scale-[103%]"
             >
-              {loading ? "Loading..." : "Sign in"}
+              {loading ? <p>loading...</p> : <p>Sign In</p>}
             </button>
           </form>
         </div>
