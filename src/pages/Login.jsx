@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser as faCircleUserSolid } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, fetchProfile } from "../store/authSlice";
@@ -8,12 +8,28 @@ import { login, fetchProfile } from "../store/authSlice";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+
   const { error, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("rememberedEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setRememberMe(true);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (rememberMe) {
+      localStorage.setItem("rememberedEmail", email);
+    } else {
+      localStorage.removeItem("rememberedEmail");
+    }
+
     const result = await dispatch(login({ email, password }));
     if (result.meta.requestStatus === "fulfilled") {
       const user = await dispatch(fetchProfile(result.payload.token));
@@ -50,6 +66,7 @@ const Login = () => {
                 id="email"
                 className="w-full px-3 py-2 border border-gray-300 rounded"
                 required
+                autoComplete="email"
               />
             </div>
             <div>
@@ -63,8 +80,23 @@ const Login = () => {
                 id="password"
                 className="w-full px-3 py-2 border border-gray-300 rounded"
                 required
+                autoComplete="current-password"
               />
             </div>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="mr-2"
+              />
+
+              <label htmlFor="rememberMe" className="font-bold">
+                Remember me
+              </label>
+            </div>
+
             <button
               type="submit"
               className="w-full bg-customGreen text-white py-2 px-4 rounded font-bold transition duration-150 ease-in-out transform hover:scale-[103%]"
